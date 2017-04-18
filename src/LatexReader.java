@@ -28,11 +28,11 @@ public class LatexReader {
         Matcher m;
         latexHeader = new ArrayList<String>();
         latexText = new ArrayList<String>();
-        boolean inHeader;
+        boolean inHeader = true;
 
         for (String s : file) {
             m = p.matcher(s);
-            if(inHeader==true) {
+            if(inHeader) {
                 if (m.find()) {
                     inHeader = false;
 
