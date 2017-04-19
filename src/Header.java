@@ -21,16 +21,6 @@ public class Header {
 
     private List<String> teiHeader;
 
-    private Pattern titlePattern;
-    private Pattern authorPattern;
-    private Pattern publisherPattern;
-    private Pattern pubPlacePattern;
-    private Pattern licensePattern;
-    private Pattern datePattern;
-    private Pattern languagePattern;
-
-    private Matcher m;
-
 
 
     public Header(List<String> latexHeader){
@@ -41,21 +31,23 @@ public class Header {
 
     }
 
+
+    //Todo set right regex and fill with group
     public void initializeIntel(List<String> latexHeader)
     {
-        titlePattern = Pattern.compile("^\\\\title\\{.*\\}");
-        authorPattern = Pattern.compile("^\\\\author\\{.*\\}");
-        publisherPattern = Pattern.compile("^\\\\title\\{.*\\}");
-        pubPlacePattern = Pattern.compile("^\\\\title\\{.*\\}");
-        licensePattern = Pattern.compile("^\\\\title\\{.*\\}");
-        datePattern = Pattern.compile("^\\\\title\\{.*\\}");
-        languagePattern = Pattern.compile("^\\\\title\\{.*\\}");
+        Pattern titlePattern = Pattern.compile("^\\\\title\\{(.+?)\\}");
+        Pattern authorPattern = Pattern.compile("^\\\\author\\{.*\\}");
+        Pattern publisherPattern = Pattern.compile("^\\\\title\\{.*\\}");
+        Pattern pubPlacePattern = Pattern.compile("^\\\\title\\{.*\\}");
+        Pattern licensePattern = Pattern.compile("^\\\\title\\{.*\\}");
+        Pattern datePattern = Pattern.compile("^\\\\date\\{(.+?)\\}");
+        Pattern languagePattern = Pattern.compile("^\\\\setdefaultlanguage\\{(.+?)\\}");
 
         Matcher m;
         for(String s : latexHeader){
             m = titlePattern.matcher(s);
             if(m.find()){
-                title = "test";
+                title = m.group(1);
             }
             m = authorPattern.matcher(s);
             if(m.find()){
@@ -75,11 +67,16 @@ public class Header {
             }
             m = datePattern.matcher(s);
             if(m.find()){
-                date = "test";
+                date = m.group(1);
+                if(date.equals("\\today")){
+
+                    //Todo set correct date
+                    date = "Heute";
+                }
             }
             m = languagePattern.matcher(s);
             if(m.find()){
-                language = "test";
+                language = m.group(1);
             }
 
         }
