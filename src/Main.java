@@ -12,17 +12,23 @@ public class Main {
         List<String> latexHeader = reader.getLatexHeader();
         List<String> latexText = reader.getLatexText();
 
-        for(String s : latexHeader)
-        {
-            System.out.println(s);
-        }
+        Header tHead = new Header(latexHeader);
+        List<String> teiHeader = tHead.getTeiHeader();
 
-        System.out.println("------------------------------Trenner----------------------------------------------");
+        int i = 0;
 
-        for(String s : latexText)
+        for(String s : teiHeader)
         {
-            System.out.println(s);
+            System.out.println(i + " " + s);
+            i++;
         }
+//
+//        i = 0;
+//        for(String s : latexText)
+//        {
+//            System.out.println(i + " " + s);
+//            i++;
+//        }
 
     }
 
