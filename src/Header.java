@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by disas on 18.04.2017.
@@ -7,51 +9,117 @@ import java.util.ArrayList;
 
 public class Header {
 
-    public String title = "";
-    public String author = "";
+    private String title = "";
+    private String author = "";
 
-    public String publisher = "";
-    public String pubPlace = "";
-    public String license = "";
+    private String publisher = "";
+    private String pubPlace = "";
+    private String license = "";
 
-    public String date = "";
-    public String language = "";
+    private String date = "";
+    private String language = "";
 
-    public List<String> headerList;
+    private List<String> teiHeader;
 
-    public Header(){
-        headerList = new ArrayList<String>();
-        headerList.add("\t<teiHeader type=\"text\">");
-        headerList.add("\t\t<fileDesc>");
+    private Pattern titlePattern;
+    private Pattern authorPattern;
+    private Pattern publisherPattern;
+    private Pattern pubPlacePattern;
+    private Pattern licensePattern;
+    private Pattern datePattern;
+    private Pattern languagePattern;
 
-        headerList.add("\t\t\t<titleStmt>");
-        headerList.add("\t\t\t\t<title>" + title + "</title>");
-        headerList.add("\t\t\t\t<author>" + author + "</author>");
-        headerList.add("\t\t\t</titleStmt>");
+    private Matcher m;
 
-        headerList.add("\t\t\t<publicationStmt>");
-        headerList.add("\t\t\t\t<publisher>" + publisher + "</publisher>");
-        headerList.add("\t\t\t\t<pubPlace>" + pubPlace + "</pubPlace>");
-        headerList.add("\t\t\t\t<license>" + license + "</license>");
-        headerList.add("\t\t\t</publicationStmt>");
 
-        headerList.add("\t\t\t<sourceDesc>");
-        headerList.add("\t\t\t\t<date>" + date + "</date>");
-        headerList.add("\t\t\t</sourceDesc>");
 
-        headerList.add("\t\t</fileDesc>");
-        headerList.add("\t\t<profileDesc>");
+    public Header(List<String> latexHeader){
+        teiHeader = new ArrayList<String>();
+        initializeIntel(latexHeader);
 
-        headerList.add("\t\t\t<langUsage>");
-        headerList.add("\t\t\t\t<language>" + language + "</language");
-        headerList.add("\t\t\t</langUsage>");
+        createTEI();
 
-        headerList.add("\t\t</profileDesc>");
-        headerList.add("</teiHeader>");
     }
 
-    public List<String> getHeaderList() {
-        return headerList;
+    public void initializeIntel(List<String> latexHeader)
+    {
+        titlePattern = Pattern.compile("^\\\\title\\{.*\\}");
+        authorPattern = Pattern.compile("^\\\\author\\{.*\\}");
+        publisherPattern = Pattern.compile("^\\\\title\\{.*\\}");
+        pubPlacePattern = Pattern.compile("^\\\\title\\{.*\\}");
+        licensePattern = Pattern.compile("^\\\\title\\{.*\\}");
+        datePattern = Pattern.compile("^\\\\title\\{.*\\}");
+        languagePattern = Pattern.compile("^\\\\title\\{.*\\}");
+
+        Matcher m;
+        for(String s : latexHeader){
+            m = titlePattern.matcher(s);
+            if(m.find()){
+                title = "test";
+            }
+            m = authorPattern.matcher(s);
+            if(m.find()){
+                author = "test";
+            }
+            m = publisherPattern.matcher(s);
+            if(m.find()){
+                publisher = "test";
+            }
+            m = pubPlacePattern.matcher(s);
+            if(m.find()){
+                pubPlace = "test";
+            }
+            m = licensePattern.matcher(s);
+            if(m.find()){
+                license = "test";
+            }
+            m = datePattern.matcher(s);
+            if(m.find()){
+                date = "test";
+            }
+            m = languagePattern.matcher(s);
+            if(m.find()){
+                language = "test";
+            }
+
+        }
     }
+
+    public List<String> getTeiHeader() {
+        return teiHeader;
+    }
+
+
+    public void createTEI(){
+        teiHeader.add("\t<teiHeader type=\"text\">");
+        teiHeader.add("\t\t<fileDesc>");
+
+        teiHeader.add("\t\t\t<titleStmt>");
+        teiHeader.add("\t\t\t\t<title>" + title + "</title>");
+        teiHeader.add("\t\t\t\t<author>" + author + "</author>");
+        teiHeader.add("\t\t\t</titleStmt>");
+
+        teiHeader.add("\t\t\t<publicationStmt>");
+        teiHeader.add("\t\t\t\t<publisher>" + publisher + "</publisher>");
+        teiHeader.add("\t\t\t\t<pubPlace>" + pubPlace + "</pubPlace>");
+        teiHeader.add("\t\t\t\t<license>" + license + "</license>");
+        teiHeader.add("\t\t\t</publicationStmt>");
+
+        teiHeader.add("\t\t\t<sourceDesc>");
+        teiHeader.add("\t\t\t\t<date>" + date + "</date>");
+        teiHeader.add("\t\t\t</sourceDesc>");
+
+        teiHeader.add("\t\t</fileDesc>");
+        teiHeader.add("\t\t<profileDesc>");
+
+        teiHeader.add("\t\t\t<langUsage>");
+        teiHeader.add("\t\t\t\t<language>" + language + "</language");
+        teiHeader.add("\t\t\t</langUsage>");
+
+        teiHeader.add("\t\t</profileDesc>");
+        teiHeader.add("\t</teiHeader>");
+    }
+
+
 
 }
