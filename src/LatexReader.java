@@ -24,7 +24,7 @@ public class LatexReader {
     //Split File into Header and Text
     private void splitFile(List<String> file)
     {
-        Pattern p = Pattern.compile("^\\\\section\\{.*\\}");   // the pattern to search for
+        Pattern p = Pattern.compile("^\\\\begin\\{document\\}");   // the pattern to search for
         Matcher m;
         latexHeader = new ArrayList<String>();
         latexText = new ArrayList<String>();
@@ -35,6 +35,7 @@ public class LatexReader {
             if(inHeader) {
                 if (m.find()) {
                     inHeader = false;
+                    latexText.add(s);
 
                 } else {
                     latexHeader.add(s);
