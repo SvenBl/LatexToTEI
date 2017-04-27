@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by disas on 20.04.2017.
@@ -14,11 +16,64 @@ public class Text {
     }
 
     private void createTEI(List<String> latexText){
-        for(String s : latexText){
-            //teiText.add("hallo");
-        }
+
+        //Start Tags
         teiText.add("\t<text>");
         teiText.add("\t\t<body>");
+
+        Pattern commentPattern = Pattern.compile("^\\%");
+        Pattern sectionPattern = Pattern.compile("^\\\\section\\{(.+?)\\}");
+        Pattern subsectionPattern = Pattern.compile("^\\\\subsection\\{(.+?)\\}");
+        Matcher m;
+
+        int section = 1;
+        int subsection = 0;
+        int sentence = 1;
+
+
+        for(String s : latexText){
+            m = commentPattern.matcher(s);
+            if(m.find() || s.equals("")){
+            }
+            else{
+
+                //sections (+subsection)
+                m = sectionPattern.matcher(s);
+                if(m.find()){
+                    if(section > 1){
+                        teiText.add("\t\t\t\t</div2>");
+                        teiText.add("\t\t\t</div1>");
+                    }
+                    subsection =0;
+                    teiText.add("\t\t\t<div1 type = \"section\" n=" + section + ">");
+                    teiText.add("\t\t\t\t<div2 type = \"subsection\" n=" + (subsection+1) + ">");
+                    section++;
+
+                }
+
+                //subsection
+                m = subsectionPattern.matcher(s);
+                if(m.find()){
+                    if(subsection==0){
+                        subsection++;
+                    }
+                    else if(subsection>=1){
+                        teiText.add("\t\t\t\t</div2>");
+                        teiText.add("\t\t\t\t<div2 type = \"subsection\" n=" + (subsection+1) + ">");
+                        subsection++;
+
+                    }
+                }
+
+
+
+                //teiText.add(s);
+            }
+        }
+
+        //End Tags
+        teiText.add("\t\t\t\t</div2>");
+        teiText.add("\t\t\t</div1>");
         teiText.add("\t\t</body>");
         teiText.add("\t</text>");
         teiText.add("</TEI>");

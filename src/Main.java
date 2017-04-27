@@ -8,8 +8,8 @@ public class Main {
 
     public static void main(String[]args){
 
-        LatexReader reader = new LatexReader("C:\\Users\\disas\\Dropbox\\Uni Leipzig\\Anwendungen der Linguistischen Informatik\\CLARIN_CTS.tex");
-        //LatexReader reader = new LatexReader("C:\\Users\\disas\\Downloads\\article_2\\article_2.tex");
+        //LatexReader reader = new LatexReader("C:\\Users\\disas\\Dropbox\\Uni Leipzig\\Anwendungen der Linguistischen Informatik\\CLARIN_CTS.tex");
+        LatexReader reader = new LatexReader("C:\\Users\\disas\\Downloads\\article_2\\article_2.tex");
 
         //Read the LatexFiles
         List<String> latexHeader = reader.getLatexHeader();
