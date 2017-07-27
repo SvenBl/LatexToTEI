@@ -24,6 +24,9 @@ public class Text {
         Pattern commentPattern = Pattern.compile("^\\%");
         Pattern sectionPattern = Pattern.compile("^\\\\section\\{(.+?)\\}");
         Pattern subsectionPattern = Pattern.compile("^\\\\subsection\\{(.+?)\\}");
+        Pattern sentencePattern = Pattern.compile("^[^\\\\]");
+        Pattern itemPattern = Pattern.compile("^\\\\item(.+?)");
+
         Matcher m;
 
         int section = 1;
@@ -48,6 +51,7 @@ public class Text {
                     teiText.add("\t\t\t<div1 type = \"section\" n=" + section + ">");
                     teiText.add("\t\t\t\t<div2 type = \"subsection\" n=" + (subsection+1) + ">");
                     section++;
+                    sentence = 1;
 
                 }
 
@@ -65,7 +69,16 @@ public class Text {
                     }
                 }
 
-
+                //sentences
+                m = sentencePattern.matcher(s);
+                if(m.find()){
+                    teiText.add("\t\t\t\t\t<div3 type = \"sentence\" n=" + sentence + ">" + s + "</div3>");
+                    sentence++;
+                }
+                m = itemPattern.matcher(s);
+                if(m.find()){
+                    teiText.add("\t\t\t\t\t<div3 type = \"sentence\" n=" + m.group(1) + ">" + s + "</div3>");
+                }
 
                 //teiText.add(s);
             }

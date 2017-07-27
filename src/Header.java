@@ -51,19 +51,19 @@ public class Header {
             }
             m = authorPattern.matcher(s);
             if(m.find()){
-                author = "test";
+                author = "foo";
             }
             m = publisherPattern.matcher(s);
             if(m.find()){
-                publisher = "test";
+                publisher = "foo";
             }
             m = pubPlacePattern.matcher(s);
             if(m.find()){
-                pubPlace = "test";
+                pubPlace = "foo";
             }
             m = licensePattern.matcher(s);
             if(m.find()){
-                license = "test";
+                license = "foo";
             }
             m = datePattern.matcher(s);
             if(m.find()){
@@ -111,7 +111,7 @@ public class Header {
         teiHeader.add("\t\t<profileDesc>");
 
         teiHeader.add("\t\t\t<langUsage>");
-        teiHeader.add("\t\t\t\t<language>" + language + "</language");
+        teiHeader.add("\t\t\t\t<language>" + language + "</language>");
         teiHeader.add("\t\t\t</langUsage>");
 
         teiHeader.add("\t\t</profileDesc>");
